@@ -26,12 +26,19 @@ def get_commit_id(project_dir):
 
 
 def execute_docker_operation(project_dir, project_id, commit_id):
+    print("Executing command:" + "docker", "run",
+          "-v", project_dir + ":/var/project",
+          "-v", data_dir_path + ":/shared-index/output",
+          "-e", "COMMIT_ID=" + commit_id,
+          "-e", "PROJECT_ID=" + project_id,
+          "damintsew/idea-indexer-2021.3.2-snapshot")
+
     process = subprocess.Popen(["docker", "run",
                                 "-v", project_dir + ":/var/project",
                                 "-v", data_dir_path + ":/shared-index/output",
                                 "-e", "COMMIT_ID=" + commit_id,
                                 "-e", "PROJECT_ID=" + project_id,
-                                "damintsew/indexer-2021.2.3"],
+                                "damintsew/go-indexer-2021.3.2-snapshot"],
                                cwd=".", stdout=subprocess.PIPE,
                                universal_newlines=True)
     while True:
